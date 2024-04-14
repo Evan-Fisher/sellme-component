@@ -94,7 +94,7 @@ export default function Home() {
   }
 
   function handlePress() {
-    socket.current = io("http://localhost:3001");
+    socket.current = io("https://sellme.onrender.com");
 
     socket?.current?.on("connect", () => {
       console.log("Connected:", socket.current.connected); // true
