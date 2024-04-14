@@ -94,7 +94,13 @@ export default function Home() {
   }
 
   function handlePress() {
-    socket.current = io("https://sellme.onrender.com");
+    socket.current = io("https://sellme.onrender.com", {
+      transports: ["websocket"], // use webSocket only
+    });
+    // socket.current = io("http://localhost:3001");
+    // socket.current = io(
+    //   "https://289e-2601-645-4580-2760-84c8-aa86-3890-5533.ngrok-free.app"
+    // );
 
     socket?.current?.on("connect", () => {
       console.log("Connected:", socket.current.connected); // true
