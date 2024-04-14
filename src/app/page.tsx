@@ -102,18 +102,24 @@ export default function Home() {
     //   "https://289e-2601-645-4580-2760-84c8-aa86-3890-5533.ngrok-free.app"
     // );
 
-    socket?.current?.on("connect", () => {
-      console.log("Connected:", socket.current.connected); // true
-      console.log(socket.current.id);
+    // Set up connection-related event listeners
+    socket.current.on("connect", () => {
+      console.log("Connected:", socket.current.connected); // Should be true
+      console.log("Socket ID:", socket.current.id);
+
+      // Now that we're connected, it's safe to emit
+      console.log("REGISTERING:", userId);
+      socket.current.emit("register", userId);
+
+      // Set up other event listeners
+      socket.current.on("receive_audio", function (data: any) {
+        console.log("Playing audio");
+        playAudio(data);
+      });
+      setConnect(true);
     });
 
-    socket?.current?.emit("register", userId);
-
-    socket?.current?.on("receive_audio", function (data: any) {
-      console.log("playing audio");
-      playAudio(data);
-    });
-    setTimeout(() => setConnect(true), 3000);
+    // setTimeout(() => , 3000);
   }
 
   return (
